@@ -108,6 +108,16 @@ app.post('/device', function(req, res) {
   res.json(payload);
 });
 
+app.get('/power/reboot', function(req, res) {
+  var output = shell.exec('sudo reboot').output;
+  res.send(output);
+});
+
+app.get('/power/reboot', function(req, res) {
+  var output = shell.exec('sudo shutdown -h now').output;
+  res.send(output);
+});
+
 var server = app.listen(5000, function() {
   var host = server.address().address;
   var port = server.address().port;

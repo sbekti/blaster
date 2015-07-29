@@ -17,8 +17,36 @@
 </head>
 
 <body>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Bekti Blaster</a>
+      </div>
+
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/">Home</a></li>
+          <li><a href="/remote">Remote</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Power <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="/power/reboot">Reboot</a></li>
+              <li><a href="/power/shutdown">Shutdown</a></li>
+            </ul>
+          </li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+  </nav>
   <div class="container">
-    <h1>Welcome to Bekti Blaster!</h1>
+    <h1>Ready to Blast?</h1>
     <p class="lead">Select a remote control definition file to begin.</p>
     <form id="form-upload" action="/upload" method="post" enctype="multipart/form-data">
       <span class="file-input btn btn-default btn-file">
@@ -28,6 +56,15 @@
     <p class="lead">You can also select a previously used remote control:</p>
     <div id="react-root"></div>
   </div>
+  <nav class="navbar navbar-fixed-bottom footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <p class="small">Copyright &copy; 2015 Samudra Harapan Bekti. All rights reserved.</p>
+        </div>
+      </div>
+    </div>
+  </nav>
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   <script type="text/javascript" src="js/JSXTransformer.js"></script>
