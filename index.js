@@ -55,17 +55,19 @@ app.post('/upload', upload.single('file'), function(req, res) {
   }
 
   shell.exec('sudo /etc/init.d/lirc stop');
-  shell.exec('sudo cp ' + path.join(__dirname, req.file.path) + ' /etc/lirc/lircd.conf');
+  shell.exec('sudo mv ' + path.join(__dirname, req.file.path) + ' /etc/lirc/lircd.conf');
   shell.exec('sudo /etc/init.d/lirc start');
 
   device = {
     name: name,
     codes: codes
-  }
+  };
 
   fs.writeFile(path.join(__dirname, 'device.json'), JSON.stringify(device), function(err) {
     if (err) {
-      return console.log(err);
+      console.log(err);
+    } else {
+      shell.exec('sudo cp ' + path.join(__dirname, 'device.json') + ' ' + path.join(__dirname, 'uploads', name));
     }
   });
 
@@ -74,6 +76,19 @@ app.post('/upload', upload.single('file'), function(req, res) {
 
 app.get('/remote', function(req, res) {
   res.sendFile(path.join(__dirname, 'remote.html'));
+});
+
+app.get('/devices', function(req, res) {
+  var files = fs.readdirSync(path.join(__dirname, 'uploads'));
+  res.json(files);
+});
+
+app.post('/devices', function(req, res) {
+  var device = req.body.device;
+  var file = fs.readFileSync(path.join(__dirname, 'uploads', device)).toString();
+
+  device = JSON.parse(file);
+  res.json(device);
 });
 
 app.get('/device', function(req, res) {

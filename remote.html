@@ -22,6 +22,7 @@
   </div>
   <script type="text/javascript" src="js/jquery.min.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap-notify.min.js"></script>
   <script type="text/javascript" src="js/JSXTransformer.js"></script>
   <script type="text/javascript" src="js/react.min.js"></script>
   <script type="text/jsx">
@@ -71,7 +72,14 @@
           cache: false,
           data: JSON.stringify({ name: this.state.name, code: code }),
           success: function(data) {
-            console.log(data);
+            var type = code != 0 ? 'danger' : 'success';
+
+            $.notify({
+              title: '<strong>' + code + '</strong>',
+              message: 'Result: ' + data.result
+            }, {
+              type: type
+            });
           },
           error: function(xhr, status, err) {
             console.error(this.props.url, status, err.toString());

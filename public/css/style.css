@@ -17,3 +17,6 @@
   cursor: inherit;
   display: block;
 }
+#form-upload {
+  margin-bottom: 30px;
+}
