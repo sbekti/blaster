@@ -115,7 +115,7 @@ app.get('/power/reboot', function(req, res) {
   res.send(output);
 });
 
-app.get('/power/reboot', function(req, res) {
+app.get('/power/shutdown', function(req, res) {
   var output = shell.exec('sudo shutdown -h now').output;
   res.send(output);
 });
