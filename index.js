@@ -17,6 +17,8 @@ fs.readFile(path.join(__dirname, 'device.json'), function(err, data) {
   }
 });
 
+shell.exec('sudo /etc/init.d/lirc restart');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
