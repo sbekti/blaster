@@ -72,7 +72,7 @@
           cache: false,
           data: JSON.stringify({ name: this.state.name, code: code }),
           success: function(data) {
-            var type = code != 0 ? 'danger' : 'success';
+            var type = data.result != 0 ? 'danger' : 'success';
 
             $.notify({
               title: '<strong>' + code + '</strong>',
