@@ -1,0 +1,28 @@
+{
+  "name": "blaster",
+  "version": "0.1.0",
+  "description": "A self-hosted, LIRC-based IR blaster using a Raspberry Pi.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sbekti/blaster.git"
+  },
+  "author": "Samudra Harapan Bekti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sbekti/blaster/issues"
+  },
+  "homepage": "https://github.com/sbekti/blaster#readme",
+  "dependencies": {
+    "body-parser": "^1.13.2",
+    "byline": "^4.2.1",
+    "express": "^4.13.1",
+    "lodash": "^3.10.0",
+    "multer": "^1.0.1",
+    "path": "^0.11.14",
+    "shelljs": "^0.5.1"
+  }
+}

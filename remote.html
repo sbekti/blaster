@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bekti Blaster</title>
+
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+
+  <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+
+<body>
+  <div class="container">
+    <div id="react-root"></div>
+  </div>
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="js/JSXTransformer.js"></script>
+  <script type="text/javascript" src="js/react.min.js"></script>
+  <script type="text/jsx">
+    var Button = React.createClass({
+      handleClick: function() {
+        this.props.onClick(this.props.text);
+      },
+
+      render: function() {
+        return (
+          <div className="btn btn-default" onClick={this.handleClick}>
+            {this.props.text}
+          </div>
+        );
+      }
+    });
+
+    var ButtonList = React.createClass({
+      handleButtonClick: function(code) {
+        this.props.onButtonClick(code);
+      },
+
+      render: function() {
+        var self = this;
+
+        var buttonNodes = this.props.codes.map(function(code) {
+          return (
+            <Button text={code} onClick={self.handleButtonClick} />
+          );
+        });
+
+        return (
+          <div className="buttonList">
+            {buttonNodes}
+          </div>
+        );
+      }
+    });
+
+    var RemoteControlBox = React.createClass({
+      sendIRCommand: function(code) {
+        $.ajax({
+          url: this.props.url,
+          type: 'POST',
+          dataType: 'json',
+          contentType: 'application/json',
+          cache: false,
+          data: JSON.stringify({ name: this.state.name, code: code }),
+          success: function(data) {
+            console.log(data);
+          },
+          error: function(xhr, status, err) {
+            console.error(this.props.url, status, err.toString());
+          }.bind(this)
+        });
+      },
+
+      loadDataFromServer: function() {
+        $.ajax({
+          url: this.props.url,
+          dataType: 'json',
+          cache: false,
+          success: function(data) {
+            this.setState({
+              name: data.name,
+              codes: data.codes
+            });
+          }.bind(this),
+          error: function(xhr, status, err) {
+            console.error(this.props.url, status, err.toString());
+          }.bind(this)
+        });
+      },
+
+      getInitialState: function() {
+        return {
+          name: '',
+          codes: []
+        };
+      },
+
+      componentDidMount: function() {
+        this.loadDataFromServer();
+      },
+
+      render: function() {
+        return (
+          <div className="remoteControlBox">
+            <h1>{this.state.name}</h1>
+            <p className="lead">Click on a button to send IR command.</p>
+            <ButtonList codes={this.state.codes} onButtonClick={this.sendIRCommand} />
+          </div>
+        );
+      }
+    });
+
+    React.render(
+      <RemoteControlBox url="/device" />,
+      document.getElementById('react-root')
+    );
+  </script>
+</body>
+
+</html>
